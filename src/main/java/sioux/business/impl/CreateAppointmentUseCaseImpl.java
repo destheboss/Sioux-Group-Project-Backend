@@ -9,12 +9,14 @@ import sioux.persistence.AppointmentRepository;
 import sioux.persistence.EmployeeRepository;
 import sioux.persistence.entity.AppointmentEntity;
 import sioux.persistence.entity.EmployeeEntity;
+import sioux.service.EmailService;
 
 @Service
 @AllArgsConstructor
 public class CreateAppointmentUseCaseImpl implements CreateAppointmentUseCase {
     private final AppointmentRepository appointmentRepository;
     private final EmployeeRepository employeeRepository;
+    private final EmailService emailService;
 
     @Override
     public CreateAppointmentResponse createAppointment(CreateAppointmentRequest request) {
@@ -27,10 +29,19 @@ public class CreateAppointmentUseCaseImpl implements CreateAppointmentUseCase {
                 .employee(employeeEntity)
                 .build();
 
-        AppointmentEntity savedEntity = appointmentRepository.save(appointmentEntity);
+        AppointmentEntity savedAppointment = appointmentRepository.save(appointmentEntity);
+
+        String employeeEmail = savedAppointment.getEmployee().getEmail();
+        String subject = "New Appointment Created";
+        String text = String.format("Dear %s,%n%nAn appointment has been scheduled for you on %s at %s.",
+                savedAppointment.getEmployee().getFirstName(),
+                savedAppointment.getDate(),
+                savedAppointment.getTime());
+
+        emailService.sendAppointmentNotification(employeeEmail, subject, text);
 
         return CreateAppointmentResponse.builder()
-                .appointmentId(savedEntity.getId())
+                .appointmentId(savedAppointment.getId())
                 .build();
     }
 }
