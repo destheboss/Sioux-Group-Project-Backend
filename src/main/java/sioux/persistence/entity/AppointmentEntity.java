@@ -23,12 +23,20 @@ public class AppointmentEntity {
     private Long id;
 
     @NotNull
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "subject")
+    private String subject;
 
     @NotNull
-    @Column(name = "time")
-    private Time time;
+    @Column(name = "start_time")
+    private Date startTime;
+
+    @NotNull
+    @Column(name = "end_time")
+    private Date endTime;
+
+    @NotNull
+    @Column(name = "is_all_day")
+    private Boolean isAllDay;
 
     @ManyToOne
     @JoinColumn(name = "emp_id", nullable = false)

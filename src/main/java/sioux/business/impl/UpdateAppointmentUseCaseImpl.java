@@ -32,8 +32,10 @@ public class UpdateAppointmentUseCaseImpl implements UpdateAppointmentUseCase {
         Optional<EmployeeEntity> employeeEntityOptional = employeeRepository.findById(request.getEmployeeId());
         EmployeeEntity employeeEntity = employeeEntityOptional.orElseThrow(() -> new IllegalArgumentException("Invalid employee ID"));
 
-        appointment.setDate(request.getDate());
-        appointment.setTime(request.getTime());
+        appointment.setSubject(request.getSubject());
+        appointment.setStartTime(request.getStartTime());
+        appointment.setEndTime(request.getEndTime());
+        appointment.setIsAllDay(request.getIsAllDay());
         appointment.setEmployee(employeeEntity);
         appointmentRepository.save(appointment);
     }

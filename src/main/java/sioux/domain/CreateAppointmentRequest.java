@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sioux.persistence.entity.EmployeeEntity;
 
 import java.sql.Time;
 import java.util.Date;
@@ -13,7 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateAppointmentRequest {
-    private Date date;
-    private Time time;
-    private Long employeeId;
+    private String subject;
+    private Date startTime;
+    private Date endTime;
+    private Boolean isAllDay;
+    private EmployeeEntity employee;
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, Long> {
     List<AppointmentEntity> findByEmployee_Id(Long employeeId);
-    List<AppointmentEntity> findByDate(Date date);
+    List<AppointmentEntity> findByStartTime(Date date);
 }

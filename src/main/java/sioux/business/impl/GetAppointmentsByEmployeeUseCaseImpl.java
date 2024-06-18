@@ -2,7 +2,7 @@ package sioux.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sioux.business.GetAllAppointmentsUseCase;
+import sioux.business.GetAppointmentsByEmployeeUseCase;
 import sioux.domain.Appointment;
 import sioux.domain.GetAllAppointmentsResponse;
 import sioux.persistence.AppointmentRepository;
@@ -12,15 +12,14 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class GetAllAppointmentsUseCaseImpl implements GetAllAppointmentsUseCase {
-    private AppointmentRepository appointmentRepository;
+public class GetAppointmentsByEmployeeUseCaseImpl implements GetAppointmentsByEmployeeUseCase {
+    private final AppointmentRepository appointmentRepository;
 
     @Override
-    public GetAllAppointmentsResponse getAppointments() {
-        List<AppointmentEntity> results = appointmentRepository.findAll();
+    public GetAllAppointmentsResponse getAppointmentsByEmployeeId(Long employeeId) {
+        List<AppointmentEntity> results = appointmentRepository.findByEmployee_Id(employeeId);
 
-        List<Appointment> appointments = results
-                .stream()
+        List<Appointment> appointments = results.stream()
                 .map(AppointmentConverter::convertToDomain)
                 .toList();
 

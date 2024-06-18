@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.util.Date;
 
 @Data
@@ -14,7 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class Appointment {
     private Long id;
-    private Date date;
-    private Time time;
+    private String subject;
+    private Date startTime;
+    private Date endTime;
+    private Boolean isAllDay;
     private Long employeeId;
 }

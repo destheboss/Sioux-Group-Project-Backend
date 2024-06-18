@@ -20,25 +20,30 @@ public class CreateAppointmentUseCaseImpl implements CreateAppointmentUseCase {
 
     @Override
     public CreateAppointmentResponse createAppointment(CreateAppointmentRequest request) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID"));
+        EmployeeEntity employeeEntity = employeeRepository.findById(request.getEmployee().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
 
         AppointmentEntity appointmentEntity = AppointmentEntity.builder()
-                .date(request.getDate())
-                .time(request.getTime())
+                .subject(request.getSubject())
+                .startTime(request.getStartTime())
+                .endTime(request.getEndTime())
+                .isAllDay(request.getIsAllDay())
                 .employee(employeeEntity)
                 .build();
 
         AppointmentEntity savedAppointment = appointmentRepository.save(appointmentEntity);
 
         String employeeEmail = savedAppointment.getEmployee().getEmail();
-        String subject = "New Appointment Created";
-        String text = String.format("Dear %s,%n%nAn appointment has been scheduled for you on %s at %s.",
-                savedAppointment.getEmployee().getFirstName(),
-                savedAppointment.getDate(),
-                savedAppointment.getTime());
+        if (employeeEmail != null && !employeeEmail.isEmpty()) {
+            String subject = "New Appointment Created";
+            String text = String.format("Dear %s,%n%nAn appointment has been scheduled for you on %s.",
+                    savedAppointment.getEmployee().getFirstName(),
+                    savedAppointment.getStartTime());
 
-        emailService.sendAppointmentNotification(employeeEmail, subject, text);
+            emailService.sendAppointmentNotification(employeeEmail, subject, text);
+        } else {
+            throw new IllegalArgumentException("Employee email is null or empty");
+        }
 
         return CreateAppointmentResponse.builder()
                 .appointmentId(savedAppointment.getId())

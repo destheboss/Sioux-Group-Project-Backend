@@ -2,26 +2,16 @@ package sioux.business.impl;
 
 import sioux.domain.Appointment;
 import sioux.persistence.entity.AppointmentEntity;
-import sioux.persistence.entity.EmployeeEntity;
 
-final class AppointmentConverter {
-    private AppointmentConverter(){
-    }
-    public static Appointment convertToDomain(AppointmentEntity appointment){
+public class AppointmentConverter {
+    public static Appointment convertToDomain(AppointmentEntity entity) {
         return Appointment.builder()
-                .id(appointment.getId())
-                .date(appointment.getDate())
-                .time(appointment.getTime())
-                .employeeId(appointment.getEmployee().getId())
-                .build();
-    }
-
-    public static AppointmentEntity convertToEntity(Appointment appointment, EmployeeEntity employeeEntity) {
-        return AppointmentEntity.builder()
-                .id(appointment.getId())
-                .date(appointment.getDate())
-                .time(appointment.getTime())
-                .employee(employeeEntity)
+                .id(entity.getId())
+                .subject(entity.getSubject())
+                .startTime(entity.getStartTime())
+                .endTime(entity.getEndTime())
+                .isAllDay(entity.getIsAllDay())
+                .employeeId(entity.getEmployee().getId())
                 .build();
     }
 }

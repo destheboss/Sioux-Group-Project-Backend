@@ -14,7 +14,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class UpdateAppointmentRequest {
     private Long id;
-    private Date date;
-    private Time time;
+    private String subject;
+    private Date startTime;
+    private Date endTime;
+    private Boolean isAllDay;
     private Long employeeId;
 }

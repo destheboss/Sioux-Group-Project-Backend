@@ -2,14 +2,11 @@ package sioux.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import sioux.business.*;
-import sioux.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import sioux.business.*;
+import sioux.domain.*;
 
 @RestController
 @RequestMapping("/appointments")
@@ -21,6 +18,7 @@ public class AppointmentController {
     private final DeleteAppointmentUseCase deleteAppointmentUseCase;
     private final UpdateAppointmentUseCase updateAppointmentUseCase;
     private final GetAllAppointmentsUseCase getAppointmentsUseCase;
+    private final GetAppointmentsByEmployeeUseCase getAppointmentsByEmployeeUseCase;
 
     @PostMapping()
     public ResponseEntity<CreateAppointmentResponse> createAppointment(@RequestBody CreateAppointmentRequest request) {
@@ -29,14 +27,14 @@ public class AppointmentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Appointment> getAppointment(@PathVariable(value = "id") final long id){
+    public ResponseEntity<Appointment> getAppointment(@PathVariable(value = "id") final long id) {
         return getAppointmentUseCase.getAppointment(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteAppointment(@PathVariable("id") long id){
+    public ResponseEntity<Void> deleteAppointment(@PathVariable("id") long id) {
         deleteAppointmentUseCase.deleteAppointment(id);
         return ResponseEntity.noContent().build();
     }
@@ -50,8 +48,14 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAllAppointmentsResponse> getAppointments(){
+    public ResponseEntity<GetAllAppointmentsResponse> getAppointments() {
         GetAllAppointmentsResponse response = getAppointmentsUseCase.getAppointments();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/employee/{employeeId}")
+    public ResponseEntity<GetAllAppointmentsResponse> getAppointmentsByEmployeeId(@PathVariable Long employeeId) {
+        GetAllAppointmentsResponse response = getAppointmentsByEmployeeUseCase.getAppointmentsByEmployeeId(employeeId);
         return ResponseEntity.ok(response);
     }
 }
