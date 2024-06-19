@@ -19,4 +19,7 @@ public class CreateAppointmentRequest {
     private Date endTime;
     private Boolean isAllDay;
     private EmployeeEntity employee;
+    private String clientName;
+    private String clientEmail;
+    private String licensePlate;
 }

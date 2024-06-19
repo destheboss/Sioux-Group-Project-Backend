@@ -41,4 +41,16 @@ public class AppointmentEntity {
     @ManyToOne
     @JoinColumn(name = "emp_id", nullable = false)
     private EmployeeEntity employee;
+
+    @NotNull
+    @Column(name = "client_name")
+    private String clientName;
+
+    @NotNull
+    @Column(name = "client_email")
+    private String clientEmail;
+
+    @NotNull
+    @Column(name = "license_plate")
+    private String licensePlate;
 }

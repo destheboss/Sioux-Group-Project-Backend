@@ -19,4 +19,7 @@ public class UpdateAppointmentRequest {
     private Date endTime;
     private Boolean isAllDay;
     private Long employeeId;
+    private String clientName;
+    private String clientEmail;
+    private String licensePlate;
 }

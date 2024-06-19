@@ -29,6 +29,9 @@ public class CreateAppointmentUseCaseImpl implements CreateAppointmentUseCase {
                 .endTime(request.getEndTime())
                 .isAllDay(request.getIsAllDay())
                 .employee(employeeEntity)
+                .clientName(request.getClientName())
+                .clientEmail(request.getClientEmail())
+                .licensePlate(request.getLicensePlate())
                 .build();
 
         AppointmentEntity savedAppointment = appointmentRepository.save(appointmentEntity);

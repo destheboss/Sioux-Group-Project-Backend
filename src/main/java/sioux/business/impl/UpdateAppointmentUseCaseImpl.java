@@ -37,6 +37,9 @@ public class UpdateAppointmentUseCaseImpl implements UpdateAppointmentUseCase {
         appointment.setEndTime(request.getEndTime());
         appointment.setIsAllDay(request.getIsAllDay());
         appointment.setEmployee(employeeEntity);
+        appointment.setClientName(request.getClientName());
+        appointment.setClientEmail(request.getClientEmail());
+        appointment.setLicensePlate(request.getLicensePlate());
         appointmentRepository.save(appointment);
     }
 }
