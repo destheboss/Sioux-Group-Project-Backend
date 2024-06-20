@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class SerialReader {
     private static final Logger logger = Logger.getLogger(SerialReader.class.getName());
     public boolean CheckSpace() {
-        SerialPort comPort = SerialPort.getCommPort("COM4"); // Use the first available port
+        SerialPort comPort = SerialPort.getCommPort("COM7"); // Use the first available port
         comPort.setBaudRate(9600);
         comPort.openPort();
         boolean isSpaceTaken = false;
