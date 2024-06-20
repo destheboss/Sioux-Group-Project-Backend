@@ -29,7 +29,8 @@ public class ParkingController {
     @PostMapping()
     public void parking() {
         if(serialReader.CheckSpace()){
-            emailService.sendAppointmentNotification("s@gmail.com", "s", "s");
+            emailService.sendAppointmentNotification("stasnikolov03@gmail.com", "Parking Space", "All spots on the main parking are taken. Please go to the further parking!");
+            emailService.sendAppointmentNotification("naskots@hotmail.com", "Appointment soon!", "The client will be late 10 minutes, since he is going to the other parking!");
         }
 
     }
